@@ -5,8 +5,7 @@
  */
 package trabalhofinal.grafos;
 
-import java.util.Arrays;
-import java.util.List;
+
 import java.util.stream.IntStream;
 
 /**
@@ -29,6 +28,9 @@ class PrimGraph {
     
     PrimGraph(int[][] matrix) {
         
+        // adding the starting vertice
+        vertices[ vertices.length+1 ] = matrix[0][0];
+        
         for (int[] row : matrix) {
             
             int originVertice = row[0];
@@ -36,10 +38,10 @@ class PrimGraph {
             int aresta = row[2];
             int[] tempTreeSegment = {originVertice, destinationVertice};
             
-            // adds the vertice if not exists
-            if (!IntStream.of(vertices).anyMatch(x -> x == originVertice)) {
-                vertices[ vertices.length+1 ] = originVertice;
-            }
+            // // adds the first vertice if not exists
+            // if (!IntStream.of(vertices).anyMatch(x -> x == originVertice)) {
+            //     vertices[ vertices.length+1 ] = tempTreeSegment[0];
+            // }
             
             // iterates over the same matrix to compare with other ocurrences of the same vertice
             for (int[] newRow : matrix) {
@@ -56,6 +58,9 @@ class PrimGraph {
                     }
                 }
                 
+                // adds the second vertice
+                vertices[ vertices.length+1 ] = tempTreeSegment[1];
+                
                 // adds to the tree
                 tree[ tree.length+1 ] = tempTreeSegment;
             }
@@ -64,7 +69,9 @@ class PrimGraph {
     }
     
     public void printMinimalTree() {
-        
+        System.out.println("Printing MINIMAL TREE:");
+        System.out.println(vertices.toString());
+        System.out.println(tree.toString());
     }
     
 }
