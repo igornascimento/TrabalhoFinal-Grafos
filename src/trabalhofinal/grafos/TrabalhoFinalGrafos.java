@@ -5,8 +5,10 @@
  */
 package trabalhofinal.grafos;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  *
@@ -19,12 +21,18 @@ public class TrabalhoFinalGrafos {
      */
     public static void main(String[] args) {
         
-        List input = new ArrayList();
-        FileHelper fileHelper = new FileHelper();
-        input = fileHelper.readFile("etc/input.txt");
+        int[][] input;
         
-        PrimGraph graph = new PrimGraph(input);
-        graph.printMinimalTree();
+        try {
+            FileHelper fileHelper = new FileHelper();
+            input = fileHelper.readFile("./src/files/input.txt");
+            PrimGraph graph = new PrimGraph(input);
+            graph.printMinimalTree();
+        
+        } catch (FileNotFoundException ex) {
+            // Logger.getLogger(TrabalhoFinalGrafos.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Arquivo não encontrado.");
+        }
         
     }
     
