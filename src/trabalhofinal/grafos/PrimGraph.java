@@ -6,6 +6,8 @@
 package trabalhofinal.grafos;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.IntStream;
 
 /**
@@ -23,13 +25,13 @@ import java.util.stream.IntStream;
  */
 class PrimGraph {
     
-    private int[] vertices = {};
-    private int[][] tree = {};
+    private final List vertices = new ArrayList();
+    private final List tree = new ArrayList();
     
     PrimGraph(int[][] matrix) {
         
         // adding the starting vertice
-        vertices[ vertices.length+1 ] = matrix[0][0];
+        vertices.add(matrix[0][0]);
         
         for (int[] row : matrix) {
             
@@ -59,10 +61,10 @@ class PrimGraph {
                 }
                 
                 // adds the second vertice
-                vertices[ vertices.length+1 ] = tempTreeSegment[1];
+                vertices.add(tempTreeSegment[1]);
                 
                 // adds to the tree
-                tree[ tree.length+1 ] = tempTreeSegment;
+                tree.add(tempTreeSegment);
             }
         }
         
