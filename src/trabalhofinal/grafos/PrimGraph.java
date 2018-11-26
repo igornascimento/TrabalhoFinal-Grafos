@@ -7,8 +7,8 @@ package trabalhofinal.grafos;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.IntStream;
 
 /**
  * Mounts the minimal tree using the Prim algorithm model
@@ -26,7 +26,7 @@ import java.util.stream.IntStream;
 class PrimGraph {
     
     private final List vertices = new ArrayList();
-    private final List tree = new ArrayList();
+    private final List<Integer> tree = new ArrayList<>();
     
     PrimGraph(int[][] matrix) {
         
@@ -38,7 +38,7 @@ class PrimGraph {
             int originVertice = row[0];
             int destinationVertice = row[1];
             int aresta = row[2];
-            int[] tempTreeSegment = {originVertice, destinationVertice};
+            Integer[] tempTreeSegment = {originVertice, destinationVertice};
             
             // // adds the first vertice if not exists
             // if (!IntStream.of(vertices).anyMatch(x -> x == originVertice)) {
@@ -57,14 +57,16 @@ class PrimGraph {
                     if (aresta < newAresta) {
                         tempTreeSegment[0] = newOriginVertice;
                         tempTreeSegment[1] = newDestinationVertice;
+                        
+                        // adds the second vertice
+                        vertices.add(tempTreeSegment[0]);
+
+                        // adds to the tree
+                        //tree.add(tempTreeSegment);
+                        Collections.addAll(tree, tempTreeSegment);
+                        System.out.println("Segment: " + tempTreeSegment[0]);
                     }
                 }
-                
-                // adds the second vertice
-                vertices.add(tempTreeSegment[1]);
-                
-                // adds to the tree
-                tree.add(tempTreeSegment);
             }
         }
         
@@ -73,6 +75,7 @@ class PrimGraph {
     public void printMinimalTree() {
         System.out.println("Printing MINIMAL TREE:");
         System.out.println(vertices.toString());
+        System.out.println("Printing TREE:");
         System.out.println(tree.toString());
     }
     
