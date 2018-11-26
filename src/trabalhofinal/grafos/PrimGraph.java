@@ -26,24 +26,20 @@ import java.util.List;
 class PrimGraph {
     
     private final List vertices = new ArrayList();
-    private final List<Integer> tree = new ArrayList<>();
+    private final Matrix tree = new Matrix();
     
     PrimGraph(int[][] matrix) {
         
         // adding the starting vertice
         vertices.add(matrix[0][0]);
+        int rowCount = 0, innerRowCount = 0;
         
         for (int[] row : matrix) {
             
             int originVertice = row[0];
             int destinationVertice = row[1];
             int aresta = row[2];
-            Integer[] tempTreeSegment = {originVertice, destinationVertice};
-            
-            // // adds the first vertice if not exists
-            // if (!IntStream.of(vertices).anyMatch(x -> x == originVertice)) {
-            //     vertices[ vertices.length+1 ] = tempTreeSegment[0];
-            // }
+            tree.addElement(originVertice, destinationVertice);
             
             // iterates over the same matrix to compare with other ocurrences of the same vertice
             for (int[] newRow : matrix) {
@@ -52,22 +48,21 @@ class PrimGraph {
                 int newDestinationVertice = newRow[1];
                 int newAresta = newRow[2];
                 
-                // test other ocurrences of the same vertice AND ensure it is another row
-                if (originVertice == newOriginVertice && destinationVertice != newDestinationVertice) {
-                    if (aresta < newAresta) {
-                        tempTreeSegment[0] = newOriginVertice;
-                        tempTreeSegment[1] = newDestinationVertice;
-                        
-                        // adds the second vertice
-                        vertices.add(tempTreeSegment[0]);
-
-                        // adds to the tree
-                        //tree.add(tempTreeSegment);
-                        Collections.addAll(tree, tempTreeSegment);
-                        System.out.println("Segment: " + tempTreeSegment[0]);
+                // ensure it is a different row
+                if (rowCount != innerRowCount) {
+                    
+                    // test other ocurrences of the same vertice
+                    if ((originVertice == newOriginVertice) && (destinationVertice != newDestinationVertice)) {
+                        if (aresta < newAresta) {
+                            vertices.add(newOriginVertice);
+                            tree.addElement(newOriginVertice, newDestinationVertice);
+                        }
                     }
                 }
+                innerRowCount++;
             }
+            innerRowCount = 0;
+            rowCount++;
         }
         
     }
@@ -77,6 +72,10 @@ class PrimGraph {
         System.out.println(vertices.toString());
         System.out.println("Printing TREE:");
         System.out.println(tree.toString());
+        
+        for (int i=0; i<tree.size(); i++) {
+            System.out.println(tree.get(i));
+        }
     }
     
 }
