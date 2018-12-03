@@ -6,8 +6,6 @@
 package trabalhofinal.grafos;
 
 import java.io.FileNotFoundException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /**
@@ -21,12 +19,11 @@ public class TrabalhoFinalGrafos {
      */
     public static void main(String[] args) {
         
-        int[][] input;
-        
         try {
             FileHelper fileHelper = new FileHelper();
-            input = fileHelper.readFile("./src/files/input.txt");
-            PrimGraph graph = new PrimGraph(input);
+            fileHelper.readFile("./src/files/input.txt");
+            
+            PrimGraph graph = new PrimGraph(fileHelper.getFinalMatrix(), fileHelper.getarrayDimension());
             graph.printMinimalTree();
         
         } catch (FileNotFoundException ex) {

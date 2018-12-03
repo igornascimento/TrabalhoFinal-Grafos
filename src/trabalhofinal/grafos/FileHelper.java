@@ -16,37 +16,45 @@ import java.util.Scanner;
  */
 class FileHelper {
     
-    public int[][] readFile(String source) throws FileNotFoundException {
+    private int[][] finalMatrix = {};
+    private int arrayDimension = 0;
+    
+    public void readFile(String source) throws FileNotFoundException {
         
         File file = new File(source);
         Scanner scanner = new Scanner(file);
         
         // gets the first line to define the array
         String[] arrStrings = scanner.nextLine().split(" ");
+        // second position is the array length
         int numRows = Integer.parseInt(arrStrings[1]);
         
-        int cnt = 0;
+        int cnt = 1;
         int[][] finalMatrix = new int[numRows][3];
         
         while (scanner.hasNextLine()) {
-            
             arrStrings = scanner.nextLine().split(" ");
             
-            // ignoring first line (num of vertices and arestas)
-            if (cnt != 0) {
-                int[] arr = {
-                    Integer.parseInt(arrStrings[0]), 
-                    Integer.parseInt(arrStrings[1]), 
-                    Integer.parseInt(arrStrings[2])
-                };
-                
-                // populating the final matrix
-                finalMatrix[cnt-1] = arr;
-            }
+            int[] arr = {
+                Integer.parseInt(arrStrings[0]), 
+                Integer.parseInt(arrStrings[1]), 
+                Integer.parseInt(arrStrings[2])
+            };
+
+            // populating the final matrix
+            finalMatrix[cnt-1] = arr;
             cnt++;
         }
         
-        return finalMatrix;
+        this.finalMatrix = finalMatrix;
+    }
+    
+    public int[][] getFinalMatrix() {
+        return this.finalMatrix;
+    }
+    
+    public int getarrayDimension() {
+        return this.arrayDimension;
     }
     
 }
