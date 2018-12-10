@@ -65,8 +65,10 @@ class PrimGraph {
                     // test other ocurrences of the same vertice
                     if ((originVertice == newOriginVertice) && (destinationVertice != newDestinationVertice)) {
                         System.out.println(">> " + newOriginVertice +":"+ newDestinationVertice +"->"+ aresta);
-                        if (newAresta < aresta) {
+                        
+                        if ((newAresta < aresta) && !verticeExists(vertices, newOriginVertice)) {
                             System.out.println("Verifying " + newOriginVertice +":"+":"+ newDestinationVertice +":"+ aresta);
+                            
                             evaluatedVertices[0] = newOriginVertice;
                             evaluatedVertices[1] = newDestinationVertice;
                             evaluatedAresta = newAresta;
@@ -76,11 +78,8 @@ class PrimGraph {
                     }
                 }
                 innerRowCount++;
-            }
-            // adding to the tree
-            if (verified) {
-                // if the new value is not already present in the vertices array
-                if (!verticeExists(vertices, evaluatedVertices[0])) {
+                // adding to the tree
+                if (verified) {
                     System.out.println("Adding " + evaluatedVertices[0] +":"+":"+ evaluatedVertices[1] +"->"+ evaluatedAresta);
                     vertices[evaluatedCount] = evaluatedVertices[0];
                     tree[evaluatedCount] = evaluatedVertices;
@@ -99,11 +98,16 @@ class PrimGraph {
         System.out.println("Printing ARRAY OF VERTICES:");
         System.out.println(Arrays.toString(this.internalVertices));
         System.out.println("Printing MINIMAL TREE:");
-        System.out.println(Arrays.toString(this.internalTree));
+        // System.out.println(Arrays.toString(this.internalTree));
         
+        System.out.print("[");
         for (int i=0; i<this.internalTree.length; i++) {
-            System.out.println(this.internalTree[i]);
+            if (this.internalTree[i] != null) {
+                if (i > 0) System.out.println();
+                System.out.print("[" + this.internalTree[i][0] + "], [" + this.internalTree[i][1] + "]");
+            }
         }
+        System.out.print("]");
     }
     
     public boolean verticeExists(int[] vertices, int newVertice) {
