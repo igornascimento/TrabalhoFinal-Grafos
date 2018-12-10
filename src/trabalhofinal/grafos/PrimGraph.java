@@ -64,7 +64,7 @@ class PrimGraph {
                     
                     // test other ocurrences of the same vertice
                     if ((originVertice == newOriginVertice) && (destinationVertice != newDestinationVertice)) {
-                        System.out.println(">> " + newOriginVertice +":"+":"+ newDestinationVertice +":"+ aresta +":"+ newAresta);
+                        System.out.println(">> " + newOriginVertice +":"+ newDestinationVertice +"->"+ aresta);
                         if (newAresta < aresta) {
                             System.out.println("Verifying " + newOriginVertice +":"+":"+ newDestinationVertice +":"+ aresta);
                             evaluatedVertices[0] = newOriginVertice;
@@ -79,11 +79,14 @@ class PrimGraph {
             }
             // adding to the tree
             if (verified) {
-                System.out.println("Adding " + evaluatedVertices[0] +":"+":"+ evaluatedVertices[1] +":"+ evaluatedAresta);
-                vertices[evaluatedCount] = evaluatedVertices[0];
-                tree[evaluatedCount] = evaluatedVertices;
+                // if the new value is not already present in the vertices array
+                if (!verticeExists(vertices, evaluatedVertices[0])) {
+                    System.out.println("Adding " + evaluatedVertices[0] +":"+":"+ evaluatedVertices[1] +"->"+ evaluatedAresta);
+                    vertices[evaluatedCount] = evaluatedVertices[0];
+                    tree[evaluatedCount] = evaluatedVertices;
+                    verified = false;
+                }
             }
-            verified = false;
             
             innerRowCount = 0;
             rowCount++;
@@ -101,6 +104,13 @@ class PrimGraph {
         for (int i=0; i<this.internalTree.length; i++) {
             System.out.println(this.internalTree[i]);
         }
+    }
+    
+    public boolean verticeExists(int[] vertices, int newVertice) {
+        if (Arrays.stream(vertices).anyMatch(x -> x == newVertice)) {
+            return true;
+        }
+        return false;
     }
     
 }

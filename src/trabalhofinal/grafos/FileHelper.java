@@ -28,6 +28,7 @@ class FileHelper {
         String[] arrStrings = scanner.nextLine().split(" ");
         // second position is the array length
         int numRows = Integer.parseInt(arrStrings[1]);
+        arrayDimension = numRows;
         
         int cnt = 1;
         int[][] finalMatrix = new int[numRows][3];
